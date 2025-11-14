@@ -1,0 +1,59 @@
+import json
+import view
+import acessarHost
+import escutarClientes 
+import threading
+import classes
+import mandarMensagem
+
+
+id = -1
+nome = "edilson"
+lista_todos: list[classes.Usuario] = []
+online = False
+
+parar = threading.Event()
+
+thread_secundaria = threading.Thread(
+    target = escutarClientes.conectarP2P(parar, lista_todos, id), 
+    args=("THREAD-1", parar) 
+)
+
+while True:
+    entrada = view.opcoes()
+    if online:
+        thread_secundaria.start()
+        
+    if entrada == 2:
+        dados = {
+            "nome":nome,
+            "id":id
+        } 
+       
+        data = json.loads(acessarHost.acessar(dados))
+        lista_todos = data.data
+        id = data.id
+        online = True
+    elif entrada == 3:
+        
+        while True:
+            entrada2 = view.opcoesCliente()
+            
+            if entrada2 == 2:
+                
+                mandarMensagem.pegarMensagem(0, lista_todos)#0 é tipo publico
+            elif entrada2 == 3:
+                pass
+            elif entrada2 == 4:
+                pass
+            elif entrada2 == 5:
+                break
+        
+    elif entrada == 4:
+        break
+thread_secundaria.join()
+parar.set()
+
+def atualizar():
+    pass
+
