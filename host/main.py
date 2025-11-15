@@ -19,11 +19,12 @@ def ligar():
         cliente, address = server.accept()
         data = cliente.recv(2048).decode("utf-8") #ele tem que passar o nome dele e o id
         data = json.loads(data)
-        if data.id == -1:
-            usuario_novo = usuarios.Usuario(cliente, address, id, data.nome)
+
+        if data["id"] == -1:
+            usuario_novo = usuarios.Usuario(cliente, address, id, data["nome"])
             todos_usuarios.setUsuario(usuario_novo, id)
         
-        id_usuario = id if data.id==-1 else data.id
+        id_usuario = id if data["id"] ==-1 else data["id"]
         response = {
             "id": id_usuario, #id que o usuario vai receber, caso tente acessar de novo
             "data":todos_usuarios.getUsuarios(id_usuario)
@@ -31,5 +32,6 @@ def ligar():
         id += 1
         cliente.send(json.dumps(response).encode("utf-8")) #manda o lista de todos os usuarios
         cliente.close
+        print("conversou com alguem")
     
 ligar()

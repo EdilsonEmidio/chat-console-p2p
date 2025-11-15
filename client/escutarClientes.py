@@ -19,13 +19,14 @@ def conectarP2P(parar: threading.Event, lista_todos: list[classes.Usuario], id, 
         cliente, address = server.accept()
         data = json.loads(cliente.recv(2048).decode("utf-8"))
 
-        mensagem = data.data
+        mensagem = data["data"]
         
-        if data.tipo == "publico":
+        if data["tipo"] == "publico":
             mensagens_publicas.append(mensagem)
-        elif data.tipo == "privado":
+        elif data["tipo"] == "privado":
             mensagens_privadas.append(mensagem)
-        elif data.tipo == "grupo":
-            mensagens_grupo
+        elif data["tipo"] == "grupo":
+            #mensagens_grupo
+            pass
         cliente.close
     

@@ -6,7 +6,7 @@ mensagens_publicas: list[classes.Mensagem] = []
 
 
 def grupoPublico(lista_todos, id):
-
+    pass
 
 def mostrarChat(mensagens: list[classes.Mensagem]):
     for mensagem in mensagens:

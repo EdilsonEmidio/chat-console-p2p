@@ -38,8 +38,8 @@ while True:
         } 
        
         data = json.loads(acessarHost.acessar(dados))
-        lista_todos = data.data
-        id = data.id
+        lista_todos = data["data"]
+        id = data["id"]
         online = True
     elif entrada == 3:
         
