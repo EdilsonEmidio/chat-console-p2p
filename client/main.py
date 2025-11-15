@@ -1,7 +1,7 @@
 import json
 import view
 import acessarHost
-import escutarClientes 
+import escutarClientes
 import threading
 import classes
 import mandarMensagem
@@ -14,10 +14,17 @@ online = False
 
 parar = threading.Event()
 
+mensagens_publicas: list[classes.Mensagem] = []
+mensagens_privadas: list[classes.Mensagem]= []
+mensagens_grupo: list[classes.Grupo] = []
+
 thread_secundaria = threading.Thread(
-    target = escutarClientes.conectarP2P(parar, lista_todos, id), 
-    args=("THREAD-1", parar) 
+    target = escutarClientes.conectarP2P, 
+    args=(parar, lista_todos, id, mensagens_publicas, mensagens_privadas, mensagens_grupo),
+    name="thread-1"
 )
+
+
 
 while True:
     entrada = view.opcoes()
@@ -41,7 +48,8 @@ while True:
             
             if entrada2 == 2:
                 
-                mandarMensagem.pegarMensagem(0, lista_todos)#0 é tipo publico
+                mensagens = mandarMensagem.pegarMensagem(id, nome, 0, lista_todos)#0 é tipo publico
+                mensagens_publicas.extend(mensagens)
             elif entrada2 == 3:
                 pass
             elif entrada2 == 4:
