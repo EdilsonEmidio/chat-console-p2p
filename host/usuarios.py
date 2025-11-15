@@ -13,7 +13,12 @@ class ListaUsuarios:
     def __init__(self):
         self.lista_usuarios: list[Usuario] = []
         
-    def getUsuarios(self):
+    def getUsuarios(self, id):
+        for usuario in self.lista_usuarios:
+            if usuario.id == id:
+                todos_sem_ele = self.lista_usuarios.remove(usuario)
+                self.lista_usuarios.append(usuario)
+                return todos_sem_ele
         return self.lista_usuarios
     
     def setUsuario(self, usuario: Usuario, id):

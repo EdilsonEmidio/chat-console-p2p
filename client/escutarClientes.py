@@ -13,33 +13,19 @@ def conectarP2P(parar: threading.Event, lista_todos: list[classes.Usuario], id, 
     server.bind(('localhost', int('500',id)))
 
     server.listen(len(lista_todos))    
-
+    
     
     while parar:
         cliente, address = server.accept()
         data = json.loads(cliente.recv(2048).decode("utf-8"))
-        
-        nome = procurarNome(lista_todos, address)
-        id_mensagem = procurarId(lista_todos, nome)
-        dados = classes.Mensagem(id_mensagem, nome, data)
+
+        mensagem = data.data
         
         if data.tipo == "publico":
-            mensagens_publicas.append(dados)
+            mensagens_publicas.append(mensagem)
         elif data.tipo == "privado":
-            pass
+            mensagens_privadas.append(mensagem)
         elif data.tipo == "grupo":
-            pass
+            mensagens_grupo
         cliente.close
-    
-def procurarNome(lista_todos: list[classes.Usuario], address):
-    for usuario in lista_todos:
-        print(address)
-        if usuario.address == address:
-            return usuario.nome
-
-def procurarId(lista_todos: list[classes.Usuario], nome):
-    for usuario in lista_todos:
-        
-        if usuario.nome == nome:
-            return usuario.id
     

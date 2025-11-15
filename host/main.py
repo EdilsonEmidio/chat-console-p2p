@@ -23,11 +23,12 @@ def ligar():
             usuario_novo = usuarios.Usuario(cliente, address, id, data.nome)
             todos_usuarios.setUsuario(usuario_novo, id)
         
-        id += 1
+        id_usuario = id if data.id==-1 else data.id
         response = {
-            "id":id if data.id==-1 else data.id, #id que o usuario vai receber, caso tente acessar de novo
-            "data":todos_usuarios.getUsuarios()
+            "id": id_usuario, #id que o usuario vai receber, caso tente acessar de novo
+            "data":todos_usuarios.getUsuarios(id_usuario)
         }
+        id += 1
         cliente.send(json.dumps(response).encode("utf-8")) #manda o lista de todos os usuarios
         cliente.close
     

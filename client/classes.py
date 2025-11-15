@@ -6,7 +6,8 @@ class Mensagem:
         self.mensagem = mensagem
         
 class Grupo:
-    def __init__(self, nome_grupo, lista_mensagens: list[Mensagem]) -> None:
+    def __init__(self, id_grupo, nome_grupo, lista_mensagens: list[Mensagem] = []) -> None:
+        self.id_grupo = id_grupo
         self.nome_grupo = nome_grupo
         self.lista_mensagens = lista_mensagens
 
