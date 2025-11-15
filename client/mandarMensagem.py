@@ -34,7 +34,7 @@ def mandarPublico(mensagem :classes.Mensagem, lista_todos : list[classes.Usuario
 			"tipo":"publico",
 			"data":mensagem
 		}
-        sock.connect(("localhost", ("500",usuario.id))) 
+        sock.connect(("localhost", int("500",usuario.id))) 
         sock.sendall(json.dumps(data).encode("utf-8"))
 
 

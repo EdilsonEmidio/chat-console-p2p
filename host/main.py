@@ -7,7 +7,7 @@ def ligar():
     
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    server.bind(('localhost', 5050))
+    server.bind(('192.168.3.2', 5050)) #aqui vai o ipv4 da maquina host na rede e sua porta
     
     server.listen(5)
     print("servidor aberto na porta 5050")
