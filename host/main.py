@@ -1,16 +1,17 @@
 import socket
 import usuarios
 import json
+import variaveis
 
 def ligar():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    server.bind(('192.168.3.2', 5050))
+    server.bind((variaveis.host_endereco, variaveis.host_porta))
     
     server.listen(5)
-    print("servidor aberto na porta 5050")
+    print("servidor aberto na porta ",variaveis.host_porta)
     
     todos_usuarios = usuarios.ListaUsuarios()
     id = 0

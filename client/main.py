@@ -11,24 +11,26 @@ id = -1
 nome = "edilson"
 lista_todos: list[classes.Usuario] = []
 online = False
+address = None
 
 parar = threading.Event()
+
 
 mensagens_publicas: list[classes.Mensagem] = []
 mensagens_privadas: list[classes.Mensagem]= []
 mensagens_grupo: list[classes.Grupo] = []
 grupos: list = []
 
-thread_secundaria = threading.Thread(
-    target = escutarClientes.conectarP2P, 
-    args=(parar, lista_todos, id, mensagens_publicas, mensagens_privadas, mensagens_grupo),
-    name="thread-1"
-)
 
 
 while True:
     entrada = view.opcoes()
     if online:
+        thread_secundaria = threading.Thread(
+            target = escutarClientes.conectarP2P, 
+            args=(parar, lista_todos, id, address , mensagens_publicas, mensagens_privadas, mensagens_grupo),
+            name="thread-1"
+        )
         thread_secundaria.start()
         
     if entrada == 2:#acessar o host e pegar quem tá online
@@ -40,7 +42,9 @@ while True:
         data = json.loads(acessarHost.acessar(dados))
         lista_todos = data["data"]
         id = data["id"]
+        address = data["address"][0]
         online = True
+        
     elif entrada == 3:
         
         while True:
@@ -66,7 +70,10 @@ while True:
                 while True:
                     entrada3 = view.opcoesConversaPrivada()
                     if entrada3 == 2:
-                        view.mostrarPessoasOnline(lista_todos)
+                        if lista_todos != None:
+                            view.mostrarPessoasOnline(lista_todos)
+                        else:
+                            print("não há outras pessoas online")
                     elif entrada3 == 3:
                         
                         print("digite o id de quem quer conversar:")
@@ -81,7 +88,6 @@ while True:
         
     elif entrada == 4:
         break
-thread_secundaria.join()
 parar.set()
 
 def atualizar():

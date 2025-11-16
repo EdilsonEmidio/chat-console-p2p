@@ -4,29 +4,31 @@ import threading
 import classes
 import json
 
-def conectarP2P(parar: threading.Event, lista_todos: list[classes.Usuario], id, mensagens_publicas: list[classes.Mensagem],
-                mensagens_privadas: list[classes.Mensagem], mensagens_grupo: list[classes.Grupo]):
-    
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        
-    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server.bind(('localhost', int('500',id)))
+def conectarP2P(parar: threading.Event, lista_todos: list[classes.Usuario], id, endereco_seu,
+                mensagens_publicas: list[classes.Mensagem],
+                mensagens_privadas: list[classes.Mensagem],
+                mensagens_grupo: list[classes.Grupo]):
+    print(id)
+    if lista_todos != None:
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        server.bind((endereco_seu, int('500'+str(id))))
 
-    server.listen(len(lista_todos))    
-    
-    
-    while parar:
-        cliente, address = server.accept()
-        data = json.loads(cliente.recv(2048).decode("utf-8"))
-
-        mensagem = data["data"]
+        server.listen(len(lista_todos))    
         
-        if data["tipo"] == "publico":
-            mensagens_publicas.append(mensagem)
-        elif data["tipo"] == "privado":
-            mensagens_privadas.append(mensagem)
-        elif data["tipo"] == "grupo":
-            #mensagens_grupo
-            pass
-        cliente.close
+        
+        while parar:
+            cliente, address = server.accept()
+            data = json.loads(cliente.recv(2048).decode("utf-8"))
+
+            mensagem = data["data"]
+            
+            if data["tipo"] == "publico":
+                mensagens_publicas.append(mensagem)
+            elif data["tipo"] == "privado":
+                mensagens_privadas.append(mensagem)
+            elif data["tipo"] == "grupo":
+                #mensagens_grupo
+                pass
+            cliente.close
     
