@@ -4,13 +4,7 @@ class Mensagem:
         self.id = id
         self.autor = autor
         self.mensagem = mensagem
-        
-class Grupo:
-    def __init__(self, id_grupo, nome_grupo, lista_mensagens: list[Mensagem] = []) -> None:
-        self.id_grupo = id_grupo
-        self.nome_grupo = nome_grupo
-        self.lista_mensagens = lista_mensagens
-
+     
 class Usuario:
     
     def __init__(self, cliente, address, id, nome):
@@ -18,4 +12,11 @@ class Usuario:
         self.address = address
         self.id = id
         self.nome = nome
-    
+       
+class Grupo:
+    def __init__(self, id_grupo, nome_grupo, membros: list[Usuario], lista_mensagens: list[Mensagem] = []) -> None:
+        self.id_grupo = id_grupo
+        self.nome_grupo = nome_grupo
+        self.membros = membros
+        self.lista_mensagens = lista_mensagens
+

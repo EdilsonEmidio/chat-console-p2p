@@ -19,7 +19,7 @@ parar = threading.Event()
 mensagens_publicas: list[classes.Mensagem] = []
 mensagens_privadas: list[classes.Mensagem]= []
 mensagens_grupo: list[classes.Grupo] = []
-grupos: list = []
+grupos: list[classes.Grupo] = []
 
 
 
@@ -27,7 +27,7 @@ while True:
     entrada = view.opcoes()
     if online:
         thread_secundaria = threading.Thread(
-            target = escutarClientes.conectarP2P, 
+            target = escutarClientes.conectarP2P,
             args=(parar, lista_todos, id, address , mensagens_publicas, mensagens_privadas, mensagens_grupo),
             name="thread-1"
         )
@@ -42,6 +42,7 @@ while True:
         data = json.loads(acessarHost.acessar(dados))
         lista_todos = data["data"]
         id = data["id"]
+        print(data)
         address = data["address"][0]
         online = True
         

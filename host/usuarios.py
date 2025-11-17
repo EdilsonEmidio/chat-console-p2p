@@ -33,3 +33,28 @@ class ListaUsuarios:
                 return True
         return False
     
+class Grupo:
+    def __init__(self, id, nome, membros: list[Usuario], adms: list = [Usuario]) -> None:
+        self.id = id
+        self.nome = nome
+        self.membros = membros
+        self.admins= []
+        for adm in adms:
+            self.admins.append(adm)
+            
+    def addAdmin(self, adm: Usuario):
+        self.admins.append(adm)
+    
+    def removeAdmin(self, adm: Usuario):
+        self.admins.remove(adm)
+    
+class ListaGrupos:
+    
+    def __init__(self, ) -> None:
+        self.lista_grupos: list[Grupo] = []
+    
+    
+    
+        
+    def removeAdmin(self, id_grupo, adm: Usuario):
+        self.lista_grupos.__getitem__()

@@ -3,6 +3,7 @@ import usuarios
 import json
 import variaveis
 
+
 def ligar():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
@@ -14,6 +15,7 @@ def ligar():
     print("servidor aberto na porta ",variaveis.host_porta)
     
     todos_usuarios = usuarios.ListaUsuarios()
+    todos_grupos = 
     id = 0
     
     while True:
@@ -28,7 +30,8 @@ def ligar():
         id_usuario = id if data["id"] ==-1 else data["id"]
         response = {
             "id": id_usuario, #id que o usuario vai receber, caso tente acessar de novo
-            "data":todos_usuarios.getUsuarios(id_usuario)
+            "data":todos_usuarios.getUsuarios(id_usuario),
+            "address":address
         }
         id += 1
         cliente.send(json.dumps(response).encode("utf-8")) #manda o lista de todos os usuarios

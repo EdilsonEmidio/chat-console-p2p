@@ -1,4 +1,3 @@
-from ..host.usuarios import Usuario
 import classes
 
 mensagens_publicas: list[classes.Mensagem] = []
